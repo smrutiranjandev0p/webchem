@@ -51,12 +51,14 @@ const lessonRoutes = require('./routes/lessons');
 const progressRoutes = require('./routes/progress');
 const reactionRoutes = require('./routes/reactions');
 const toolRoutes = require('./routes/tools');
+const aiRoutes = require('./routes/ai');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/reactions', reactionRoutes);
 app.use('/api/tools', toolRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

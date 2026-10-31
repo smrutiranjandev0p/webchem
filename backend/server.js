@@ -53,6 +53,7 @@ const reactionRoutes = require('./routes/reactions');
 const toolRoutes = require('./routes/tools');
 const aiRoutes = require('./routes/ai');
 const knowledgeRoutes = require('./routes/knowledge');
+const { startKnowledgeScheduler } = require('./services/knowledgeScheduler');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
@@ -95,6 +96,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 WebChem server running on http://localhost:${PORT}`);
+  startKnowledgeScheduler();
 });
 
 module.exports = app;

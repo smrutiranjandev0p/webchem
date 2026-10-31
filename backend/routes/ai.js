@@ -1,6 +1,7 @@
 const express = require('express');
 const OpenAI = require('openai');
 const rateLimit = require('express-rate-limit');
+const Knowledge = require('../models/Knowledge');
 
 const router = express.Router();
 const aiLimiter = rateLimit({
@@ -47,10 +48,26 @@ router.post('/chat', aiLimiter, async (req, res) => {
 
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const latestQuery = allowed.filter(m => m.role === 'user').map(m => m.content).join(' ').toLowerCase();
+    // Retrieve only human-approved knowledge notes; pending/rejected research is never exposed to learners.
+    const terms = [...new Set(latestQuery.match(/[a-z0-9]{4,}/g) || [])].slice(0, 8);
+    let approvedContext = '';
+    if (terms.length) {
+      const escaped = terms.map(term => new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const latestQuery = allowed.filter(m => m.role === 'user').map(m => m.content).join(' ').toLowerCase();'), 'i'));
+      const records = await Knowledge.find({
+        status: 'approved',
+        $or: escaped.flatMap(rx => [{ title: rx }, { topic: rx }, { summary: rx }])
+      }).sort({ reviewedAt: -1 }).limit(4).lean();
+      if (records.length) {
+        approvedContext = '\\n\\nApproved WebChem knowledge notes (curated and reviewed; use only when relevant, retain source attribution):\\n' +
+          records.map((item, index) => '[' + (index + 1) + '] ' + item.title + ' — ' + item.summary.slice(0, 3500) +
+            '\\nSources: ' + (item.sources || []).map(source => source.url).join(', ')).join('\\n\\n');
+      }
+    }
     const needsLiveSources = /\b(latest|current|today|yesterday|this week|recent|202[5-9]|202[0-9]|new regulation|updated standard|latest standard|search (the )?web|search (the )?internet|look up online|live data|current price|current guideline|new research|recent paper)\b/.test(latestQuery);
     const response = await client.responses.create({
       model: process.env.OPENAI_MODEL || 'gpt-5.5',
-      instructions: instructions + (mode === 'firebot'
+      instructions: instructions + approvedContext + (mode === 'firebot'
         ? '\nFor this interface, be friendly, concise and conversational. Keep useful working for calculations, but avoid long lectures unless asked.'
         : '\nFor this interface, act as a patient chemistry tutor. Explain concepts and numerical working step by step.'),
       input: allowed,

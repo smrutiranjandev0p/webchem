@@ -52,6 +52,7 @@ const progressRoutes = require('./routes/progress');
 const reactionRoutes = require('./routes/reactions');
 const toolRoutes = require('./routes/tools');
 const aiRoutes = require('./routes/ai');
+const knowledgeRoutes = require('./routes/knowledge');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
@@ -59,6 +60,7 @@ app.use('/api/progress', progressRoutes);
 app.use('/api/reactions', reactionRoutes);
 app.use('/api/tools', toolRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/knowledge', knowledgeRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -75,7 +77,8 @@ app.get('/api', (req, res) => {
       lessons: '/api/lessons',
       progress: '/api/progress',
       reactions: '/api/reactions',
-      tools: '/api/tools'
+      tools: '/api/tools',
+      knowledge: '/api/knowledge'
     }
   });
 });

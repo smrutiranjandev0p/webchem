@@ -15,7 +15,7 @@ const instructions = `You are WebChem, a careful, friendly chemistry teaching as
 Teach chemistry accurately from fundamentals through university and industrial practice.
 For numerical questions: identify the given values, state the formula, convert units explicitly, substitute values, calculate, and show the final answer with units. Check dimensional consistency and significant figures. If essential data is missing, ask a concise clarification rather than inventing it.
 For laboratory, QC, instrumentation, fertilizer, metallurgy and process questions: explain the principle, equipment, procedure, calculations, limitations and safety considerations where relevant. Never fabricate standards, calibration values, analytical results or operating limits. Distinguish educational approximations from validated lab or plant procedures.
-Use clear headings and readable equations. Match the user's language and level. FireBot may request a shorter, warmer answer; otherwise provide a thorough tutor-style explanation. If uncertain, say what is uncertain.`;
+Use clear headings and readable equations. Match the user's language and level. FireBot may request a shorter, warmer answer; otherwise provide a thorough tutor-style explanation. For questions requiring current information (recent research, current regulations, standards, prices, product specifications or events), use the live web search tool when enabled. Clearly distinguish sourced current information from established chemistry knowledge. Include source links/citations returned by search where available. Prefer authoritative scientific, government, standards-body and manufacturer sources. Never claim to have permanently learned or stored a fact just because you searched for it. If uncertain, say what is uncertain.`;
 
 router.post('/chat', aiLimiter, async (req, res) => {
   try {
@@ -46,12 +46,15 @@ router.post('/chat', aiLimiter, async (req, res) => {
     }
 
     const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const latestQuery = allowed.filter(m => m.role === 'user').map(m => m.content).join(' ').toLowerCase();
+    const needsLiveSources = /\b(latest|current|today|yesterday|this week|recent|202[5-9]|202[0-9]|new regulation|updated standard|latest standard|search (the )?web|search (the )?internet|look up online|live data|current price|current guideline|new research|recent paper)\b/.test(latestQuery);
     const response = await client.responses.create({
       model: process.env.OPENAI_MODEL || 'gpt-5.5',
       instructions: instructions + (mode === 'firebot'
         ? '\nFor this interface, be friendly, concise and conversational. Keep useful working for calculations, but avoid long lectures unless asked.'
         : '\nFor this interface, act as a patient chemistry tutor. Explain concepts and numerical working step by step.'),
-      input: allowed
+      input: allowed,
+      ...(needsLiveSources ? { tools: [{ type: 'web_search' }] } : {})
     });
 
     const answer = response.output_text;

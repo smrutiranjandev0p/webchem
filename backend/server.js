@@ -18,6 +18,8 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors({
   origin: [
     'http://localhost:8080',
+    'https://localhost',
+    'capacitor://localhost',
     'https://smrutiranjandev0p.github.io',
     process.env.FRONTEND_URL || 'http://localhost:8080'
   ],

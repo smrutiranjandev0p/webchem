@@ -52,16 +52,11 @@ router.post('/chat', aiLimiter, async (req, res) => {
     const terms = [...new Set(latestQuery.match(/[a-z0-9]{4,}/g) || [])].slice(0, 8);
     let approvedContext = '';
     if (terms.length) {
-      const escaped = terms.map(term => new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-    const latestQuery = allowed.filter(m => m.role === 'user').map(m => m.content).join(' ').toLowerCase();'), 'i'));
-      const records = await Knowledge.find({
-        status: 'approved',
-        $or: escaped.flatMap(rx => [{ title: rx }, { topic: rx }, { summary: rx }])
-      }).sort({ reviewedAt: -1 }).limit(4).lean();
+      const escaped = terms.map(term => new RegExp(term.replace(/[^a-z0-9]/gi, ''), 'i'));
+      const records = await Knowledge.find({ status: 'approved', $or: escaped.flatMap(rx => [{ title: rx }, { topic: rx }, { summary: rx }]) }).sort({ reviewedAt: -1 }).limit(4).lean();
       if (records.length) {
-        approvedContext = '\\n\\nApproved WebChem knowledge notes (curated and reviewed; use only when relevant, retain source attribution):\\n' +
-          records.map((item, index) => '[' + (index + 1) + '] ' + item.title + ' — ' + item.summary.slice(0, 3500) +
-            '\\nSources: ' + (item.sources || []).map(source => source.url).join(', ')).join('\\n\\n');
+        approvedContext = '\n\nApproved WebChem knowledge notes (curated and reviewed; use only when relevant, retain source attribution):\n' +
+          records.map((item, index) => '[' + (index + 1) + '] ' + item.title + ' — ' + item.summary.slice(0, 3500) + '\nSources: ' + (item.sources || []).map(source => source.url).join(', ')).join('\n\n');
       }
     }
     const needsLiveSources = /\b(latest|current|today|yesterday|this week|recent|202[5-9]|202[0-9]|new regulation|updated standard|latest standard|search (the )?web|search (the )?internet|look up online|live data|current price|current guideline|new research|recent paper)\b/.test(latestQuery);

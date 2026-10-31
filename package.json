@@ -8,7 +8,12 @@
     "dev": "nodemon backend/server.js",
     "test": "echo \"Tests coming soon\" && exit 0"
   },
-  "keywords": ["chemistry", "education", "learning", "science"],
+  "keywords": [
+    "chemistry",
+    "education",
+    "learning",
+    "science"
+  ],
   "author": "smrutiranjandev0p",
   "license": "MIT",
   "dependencies": {
@@ -23,7 +28,8 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "express-rate-limit": "^7.1.1",
-    "express-validator": "^7.0.1"
+    "express-validator": "^7.0.1",
+    "openai": "^5.20.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

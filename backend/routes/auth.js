@@ -1,120 +1,114 @@
 const express = require('express');
-const router = express.Router();
-const User = require('../models/User');
+const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+const nodemailer = require('nodemailer');
+const { OAuth2Client } = require('google-auth-library');
+const User = require('../models/User');
 const { protect } = require('../middleware/auth');
 
-const generateToken = (id) => {
-return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+const router = express.Router();
+const otpLimit = rateLimit({ windowMs: 15 * 60 * 1000, limit: 8, standardHeaders: 'draft-7', legacyHeaders: false });
+const loginLimit = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10, standardHeaders: 'draft-7', legacyHeaders: false });
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+const generateToken = id => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '7d' });
+const publicUser = user => ({ _id:String(user._id), username:user.username, email:user.email, avatar:user.avatar, role:user.role, stats:user.stats, createdAt:user.createdAt });
+const normalizeEmail = email => String(email || '').trim().toLowerCase();
+const hashOtp = (email, purpose, code) => crypto.createHash('sha256').update(email+'|'+purpose+'|'+code+'|'+process.env.OTP_SECRET).digest('hex');
+const transporter = () => {
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) throw new Error('Email delivery is not configured. Set SMTP settings on staging.');
+  return nodemailer.createTransport({host:process.env.SMTP_HOST,port:Number(process.env.SMTP_PORT||587),secure:String(process.env.SMTP_SECURE||'false')==='true',auth:{user:process.env.SMTP_USER,pass:process.env.SMTP_PASS}});
 };
-
-// Only return approved public fields. Never expose password or password hash.
-const publicUser = (user) => ({
-_id: String(user._id),
-username: user.username,
-email: user.email,
-avatar: user.avatar,
-role: user.role,
-stats: user.stats,
-createdAt: user.createdAt
-});
-
-router.post('/register', async (req, res) => {
-try {
-const { username, email, password } = req.body || {};
-
-if (
-  typeof username !== 'string' ||
-  !username.trim() ||
-  typeof email !== 'string' ||
-  !email.trim() ||
-  typeof password !== 'string' ||
-  password.length < 8
-) {
-  return res.status(400).json({
-    success: false,
-    error: 'Username, valid email and a password of at least 8 characters are required.'
-  });
+async function sendOtp(email, code, purpose) {
+  const subject = purpose==='register'?'Verify your WebChem email':'Your WebChem password reset code';
+  await transporter().sendMail({from:process.env.SMTP_FROM||process.env.SMTP_USER,to:email,subject,text:'Your WebChem verification code is '+code+'. It expires in 10 minutes. Do not share this code with anyone.',html:'<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:28px;border:1px solid #dce5e9;border-radius:14px"><h2>WebChem verification</h2><p>Your one-time verification code is:</p><div style="font-size:32px;font-weight:bold;letter-spacing:8px;padding:16px 0">'+code+'</div><p>This code expires in 10 minutes. If you did not request it, you can ignore this email.</p></div>'});
 }
-
-const user = await User.create({
-  username: username.trim(),
-  email: email.trim().toLowerCase(),
-  password
-});
-
-const token = generateToken(user._id);
-
-return res.status(201).json({
-  success: true,
-  token,
-  user: publicUser(user)
-});
-
-} catch (error) {
-if (error.code === 11000) {
-return res.status(409).json({
-success: false,
-error: 'Username or email is already registered.'
-});
+async function issueOtp(email,purpose,extra={}) {
+  const Otp = require('../models/AuthOtp');
+  const code = String(crypto.randomInt(0,1000000)).padStart(6,'0');
+  await Otp.deleteMany({email,purpose});
+  await Otp.create({email,purpose,codeHash:hashOtp(email,purpose,code),...extra,expiresAt:new Date(Date.now()+10*60*1000)});
+  try { await sendOtp(email,code,purpose); }
+  catch(e) { await Otp.deleteMany({email,purpose}); throw e; }
 }
-
-return res.status(400).json({
-  success: false,
-  error: 'Unable to create account with the provided details.'
-});
-
+async function consumeOtp(email,purpose,code) {
+  const Otp = require('../models/AuthOtp');
+  const doc = await Otp.findOne({email,purpose,expiresAt:{$gt:new Date()}});
+  if(!doc) return {error:'Code expired or not found. Request a new OTP.'};
+  if(doc.attempts>=5){await doc.deleteOne();return {error:'Too many incorrect attempts. Request a new OTP.'};}
+  const ok = crypto.timingSafeEqual(Buffer.from(doc.codeHash),Buffer.from(hashOtp(email,purpose,String(code||''))));
+  if(!ok){doc.attempts+=1;await doc.save();return {error:'Incorrect OTP. Please try again.'};}
+  return {doc};
 }
+router.post('/register',otpLimit,async(req,res)=>{
+  try{
+    const username=String(req.body?.username||'').trim(),email=normalizeEmail(req.body?.email),password=req.body?.password;
+    if(!/^[a-zA-Z0-9 _.-]{3,40}$/.test(username)||!/^\S+@\S+\.\S+$/.test(email)||typeof password!=='string'||password.length<10||password.length>128||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password))
+      return res.status(400).json({success:false,error:'Use a valid email, username (3–40 characters) and password (10+ characters with letters and numbers).'});
+    if(await User.findOne({$or:[{email},{username}]}))return res.status(409).json({success:false,error:'This email or username is already registered. Sign in or reset your password.'});
+    await issueOtp(email,'register',{username,passwordHash:await bcrypt.hash(password,12)});
+    return res.json({success:true,otpRequired:true,message:'Verification code sent to your email.'});
+  }catch(e){console.error('Registration OTP error:',e.message);return res.status(503).json({success:false,error:e.message.includes('Email delivery')?e.message:'Could not send verification email. Please try again.'});}
 });
-
-router.post('/login', async (req, res) => {
-try {
-const { email, password } = req.body || {};
-
-if (
-  typeof email !== 'string' ||
-  !email.trim() ||
-  typeof password !== 'string' ||
-  !password
-) {
-  return res.status(400).json({
-    success: false,
-    error: 'Email and password are required.'
-  });
-}
-
-const user = await User.findOne({
-  email: email.trim().toLowerCase()
-}).select('+password');
-
-if (!user || !(await user.comparePassword(password))) {
-  return res.status(401).json({
-    success: false,
-    error: 'Invalid credentials'
-  });
-}
-
-const token = generateToken(user._id);
-
-return res.json({
-  success: true,
-  token,
-  user: publicUser(user)
+router.post('/verify-registration',otpLimit,async(req,res)=>{
+  try{
+    const email=normalizeEmail(req.body?.email),code=String(req.body?.otp||'');
+    const check=await consumeOtp(email,'register',code);if(check.error)return res.status(400).json({success:false,error:check.error});
+    const pending=check.doc;
+    if(await User.findOne({$or:[{email},{username:pending.username}]})){await pending.deleteOne();return res.status(409).json({success:false,error:'Email or username is already registered.'});}
+    const user=await User.create({username:pending.username,email,password:pending.passwordHash,emailVerified:true});
+    await pending.deleteOne();
+    return res.status(201).json({success:true,token:generateToken(user._id),user:publicUser(user)});
+  }catch(e){console.error('Registration verification error:',e.message);return res.status(500).json({success:false,error:'Could not verify account. Please try again.'});}
 });
-
-} catch (error) {
-return res.status(500).json({
-success: false,
-error: 'Unable to sign in right now.'
+router.post('/login',loginLimit,async(req,res)=>{
+  try{
+    const email=normalizeEmail(req.body?.email),password=req.body?.password;
+    if(!email||typeof password!=='string'||!password)return res.status(400).json({success:false,error:'Email and password are required.'});
+    const user=await User.findOne({email}).select('+password');
+    if(!user||!(await user.comparePassword(password)))return res.status(401).json({success:false,error:'Invalid email or password.'});
+    if(user.emailVerified===false)return res.status(403).json({success:false,error:'Please verify your email before signing in.'});
+    return res.json({success:true,token:generateToken(user._id),user:publicUser(user)});
+  }catch(e){return res.status(500).json({success:false,error:'Unable to sign in right now.'});}
 });
-}
+router.post('/forgot-password',otpLimit,async(req,res)=>{
+  try{
+    const email=normalizeEmail(req.body?.email),user=await User.findOne({email});
+    if(user&&user.password)await issueOtp(email,'reset');
+    return res.json({success:true,message:'If an account with a password exists, a reset code has been sent.'});
+  }catch(e){console.error('Password reset OTP error:',e.message);return res.status(503).json({success:false,error:'Could not send reset email. Please try again.'});}
 });
-
-router.get('/me', protect, async (req, res) => {
-return res.json({
-success: true,
-user: publicUser(req.user)
+router.post('/reset-password',otpLimit,async(req,res)=>{
+  try{
+    const email=normalizeEmail(req.body?.email),otp=String(req.body?.otp||''),password=req.body?.password;
+    if(typeof password!=='string'||password.length<10||password.length>128||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password))return res.status(400).json({success:false,error:'New password must be at least 10 characters and contain letters and numbers.'});
+    const check=await consumeOtp(email,'reset',otp);if(check.error)return res.status(400).json({success:false,error:check.error});
+    const user=await User.findOne({email}).select('+password');if(!user||!user.password){await check.doc.deleteOne();return res.status(400).json({success:false,error:'Password reset is not available for this account.'});}
+    user.password=password;await user.save();await check.doc.deleteOne();
+    return res.json({success:true,message:'Password updated. Please sign in with your new password.'});
+  }catch(e){console.error('Password reset error:',e.message);return res.status(500).json({success:false,error:'Could not reset password. Please try again.'});}
 });
+router.post('/google',loginLimit,async(req,res)=>{
+  try{
+    const credential=String(req.body?.credential||'');
+    if(!credential||!process.env.GOOGLE_CLIENT_ID)return res.status(503).json({success:false,error:'Google Sign-In is not configured yet.'});
+    const ticket=await googleClient.verifyIdToken({idToken:credential,audience:process.env.GOOGLE_CLIENT_ID});
+    const payload=ticket.getPayload();
+    if(!payload?.sub||!payload.email||!payload.email_verified)return res.status(401).json({success:false,error:'Google account email is not verified.'});
+    const email=normalizeEmail(payload.email);
+    let user=await User.findOne({$or:[{googleId:payload.sub},{email}]});
+    if(user){
+      if(user.googleId&&user.googleId!==payload.sub)return res.status(409).json({success:false,error:'This email is linked to a different Google account.'});
+      if(!user.googleId){user.googleId=payload.sub;user.emailVerified=true;if(!user.avatar&&payload.picture)user.avatar=payload.picture;await user.save();}
+    }else{
+      const base=String(payload.name||email.split('@')[0]).replace(/[^a-zA-Z0-9 _.-]/g,'').trim().slice(0,32)||'WebChem learner';
+      let username=base,idx=1;while(await User.exists({username}))username=(base.slice(0,34)+'_'+idx++);
+      user=await User.create({username,email,googleId:payload.sub,emailVerified:true,avatar:payload.picture});
+    }
+    return res.json({success:true,token:generateToken(user._id),user:publicUser(user)});
+  }catch(e){console.error('Google Sign-In error:',e.message);return res.status(401).json({success:false,error:'Google Sign-In could not be completed.'});}
 });
-
-module.exports = router;
+router.get('/me',protect,async(req,res)=>res.json({success:true,user:publicUser(req.user)}));
+module.exports=router;

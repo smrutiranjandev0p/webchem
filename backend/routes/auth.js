@@ -58,7 +58,7 @@ router.post('/verify-registration',otpLimit,async(req,res)=>{
     const check=await consumeOtp(email,'register',code);if(check.error)return res.status(400).json({success:false,error:check.error});
     const pending=check.doc;
     if(await User.findOne({$or:[{email},{username:pending.username}]})){await pending.deleteOne();return res.status(409).json({success:false,error:'Email or username is already registered.'});}
-    const user=await User.create({username:pending.username,email,password:pending.passwordHash,emailVerified:true});
+    const user=await User.create({username:pending.username,email,password:pending.passwordHash,passwordIsHashed:true,emailVerified:true});
     await pending.deleteOne();
     return res.status(201).json({success:true,token:generateToken(user._id),user:publicUser(user)});
   }catch(e){console.error('Registration verification error:',e.message);return res.status(500).json({success:false,error:'Could not verify account. Please try again.'});}

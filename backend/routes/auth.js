@@ -42,7 +42,8 @@ async function consumeOtp(email,purpose,code) {
   if(!ok){doc.attempts+=1;await doc.save();return {error:'Incorrect OTP. Please try again.'};}
   return {doc};
 }
-router.get('/config',(req,res)=>res.json({success:true,googleClientId:process.env.GOOGLE_CLIENT_ID||''}));\nrouter.post('/register',otpLimit,async(req,res)=>{
+router.get('/config',(req,res)=>res.json({success:true,googleClientId:process.env.GOOGLE_CLIENT_ID||''}));
+router.post('/register',otpLimit,async(req,res)=>{
   try{
     const username=String(req.body?.username||'').trim(),email=normalizeEmail(req.body?.email),password=req.body?.password;
     if(!/^[a-zA-Z0-9 _.-]{3,40}$/.test(username)||!/^\S+@\S+\.\S+$/.test(email)||typeof password!=='string'||password.length<10||password.length>128||!/[A-Za-z]/.test(password)||!/[0-9]/.test(password))
@@ -73,7 +74,10 @@ router.post('/login',loginLimit,async(req,res)=>{
     return res.json({success:true,token:generateToken(user._id),user:publicUser(user)});
   }catch(e){return res.status(500).json({success:false,error:'Unable to sign in right now.'});}
 });
-router.post('/resend-registration-otp',otpLimit,async(req,res)=>{\n  try{const email=normalizeEmail(req.body?.email);const Otp=require('../models/AuthOtp');const pending=await Otp.findOne({email,purpose:'register',expiresAt:{$gt:new Date()}});if(!pending)return res.status(404).json({success:false,error:'Registration request expired. Please start again.'});const code=String(crypto.randomInt(0,1000000)).padStart(6,'0');pending.codeHash=hashOtp(email,'register',code);pending.attempts=0;pending.expiresAt=new Date(Date.now()+10*60*1000);await pending.save();await sendOtp(email,code,'register');return res.json({success:true,message:'A new verification code has been sent.'});}catch(e){return res.status(503).json({success:false,error:'Could not resend OTP. Please try again.'});}\n});\nrouter.post('/forgot-password',otpLimit,async(req,res)=>{
+router.post('/resend-registration-otp',otpLimit,async(req,res)=>{
+  try{const email=normalizeEmail(req.body?.email);const Otp=require('../models/AuthOtp');const pending=await Otp.findOne({email,purpose:'register',expiresAt:{$gt:new Date()}});if(!pending)return res.status(404).json({success:false,error:'Registration request expired. Please start again.'});const code=String(crypto.randomInt(0,1000000)).padStart(6,'0');pending.codeHash=hashOtp(email,'register',code);pending.attempts=0;pending.expiresAt=new Date(Date.now()+10*60*1000);await pending.save();await sendOtp(email,code,'register');return res.json({success:true,message:'A new verification code has been sent.'});}catch(e){return res.status(503).json({success:false,error:'Could not resend OTP. Please try again.'});}
+});
+router.post('/forgot-password',otpLimit,async(req,res)=>{
   try{
     const email=normalizeEmail(req.body?.email),user=await User.findOne({email});
     if(user&&user.password)await issueOtp(email,'reset');

@@ -26,6 +26,7 @@ async function sendOtp(email, code, purpose) {
   await transporter().sendMail({from:process.env.SMTP_FROM||process.env.SMTP_USER,to:email,subject,text:'Your WebChem verification code is '+code+'. It expires in 10 minutes. Do not share this code with anyone.',html:'<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;padding:28px;border:1px solid #dce5e9;border-radius:14px"><h2>WebChem verification</h2><p>Your one-time verification code is:</p><div style="font-size:32px;font-weight:bold;letter-spacing:8px;padding:16px 0">'+code+'</div><p>This code expires in 10 minutes. If you did not request it, you can ignore this email.</p></div>'});
 }
 async function issueOtp(email,purpose,extra={}) {
+  if (!process.env.OTP_SECRET || process.env.OTP_SECRET.length < 32) throw new Error('OTP_SECRET must be configured with at least 32 characters.');
   const Otp = require('../models/AuthOtp');
   const code = String(crypto.randomInt(0,1000000)).padStart(6,'0');
   await Otp.deleteMany({email,purpose});

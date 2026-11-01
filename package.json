@@ -29,7 +29,9 @@
     "cookie-parser": "^1.4.6",
     "express-rate-limit": "^7.1.1",
     "express-validator": "^7.0.1",
-    "openai": "^5.20.0"
+    "openai": "^5.20.0",
+    "nodemailer": "^7.0.3",
+    "google-auth-library": "^10.3.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

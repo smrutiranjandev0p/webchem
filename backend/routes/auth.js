@@ -103,14 +103,32 @@ router.post('/google',loginLimit,async(req,res)=>{
     const payload=ticket.getPayload();
     if(!payload?.sub||!payload.email||!payload.email_verified)return res.status(401).json({success:false,error:'Google account email is not verified.'});
     const email=normalizeEmail(payload.email);
-    let user=await User.findOne({$or:[{googleId:payload.sub},{email}]});
-    if(user){
-      if(user.googleId&&user.googleId!==payload.sub)return res.status(409).json({success:false,error:'This email is linked to a different Google account.'});
-      if(!user.googleId){user.googleId=payload.sub;user.emailVerified=true;if(!user.avatar&&payload.picture)user.avatar=payload.picture;await user.save();}
-    }else{
-      const base=String(payload.name||email.split('@')[0]).replace(/[^a-zA-Z0-9 _.-]/g,'').trim().slice(0,32)||'WebChem learner';
-      let username=base,idx=1;while(await User.exists({username}))username=(base.slice(0,34)+'_'+idx++);
-      user=await User.create({username,email,googleId:payload.sub,emailVerified:true,avatar:payload.picture});
+    // Use Google's stable subject as the federated identity key; never trust email alone.
+    let user=await User.findOne({googleId:payload.sub});
+    if(!user){
+      const existingEmailUser=await User.findOne({email});
+      if(existingEmailUser){
+        // Google is authoritative for Gmail addresses and verified Workspace accounts.
+        // For other third-party email addresses, require the user to authenticate to
+        // their existing WebChem account before linking a Google identity.
+        const googleIsAuthoritative=email.endsWith('@gmail.com')||Boolean(payload.hd);
+        if(!googleIsAuthoritative){
+          return res.status(409).json({success:false,error:'An account with this email already exists. Sign in with your WebChem password before linking Google.'});
+        }
+        if(existingEmailUser.googleId&&existingEmailUser.googleId!==payload.sub){
+          return res.status(409).json({success:false,error:'This WebChem account is linked to a different Google account.'});
+        }
+        existingEmailUser.googleId=payload.sub;
+        existingEmailUser.emailVerified=true;
+        if(!existingEmailUser.avatar&&payload.picture)existingEmailUser.avatar=payload.picture;
+        await existingEmailUser.save();
+        user=existingEmailUser;
+      }else{
+        const base=String(payload.name||email.split('@')[0]).replace(/[^a-zA-Z0-9 _.-]/g,'').trim().slice(0,32)||'WebChem learner';
+        let username=base,idx=1;
+        while(await User.exists({username}))username=(base.slice(0,34)+'_'+idx++);
+        user=await User.create({username,email,googleId:payload.sub,emailVerified:true,avatar:payload.picture});
+      }
     }
     return res.json({success:true,token:generateToken(user._id),user:publicUser(user)});
   }catch(e){console.error('Google Sign-In error:',e.message);return res.status(401).json({success:false,error:'Google Sign-In could not be completed.'});}

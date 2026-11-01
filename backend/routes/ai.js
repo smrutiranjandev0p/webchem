@@ -2,8 +2,10 @@ const express = require('express');
 const OpenAI = require('openai');
 const rateLimit = require('express-rate-limit');
 const Knowledge = require('../models/Knowledge');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
+router.use(protect);
 const aiLimiter = rateLimit({
   windowMs: 60 * 1000,
   limit: 20,

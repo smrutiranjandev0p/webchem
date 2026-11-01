@@ -79,7 +79,7 @@ router.post('/resend-registration-otp',otpLimit,async(req,res)=>{
 });
 router.post('/forgot-password',otpLimit,async(req,res)=>{
   try{
-    const email=normalizeEmail(req.body?.email),user=await User.findOne({email});
+    const email=normalizeEmail(req.body?.email),user=await User.findOne({email}).select('+password');
     if(user&&user.password)await issueOtp(email,'reset');
     return res.json({success:true,message:'If an account with a password exists, a reset code has been sent.'});
   }catch(e){console.error('Password reset OTP error:',e.message);return res.status(503).json({success:false,error:'Could not send reset email. Please try again.'});}

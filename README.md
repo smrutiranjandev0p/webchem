@@ -1,80 +1,61 @@
-# WebChem - Complete Chemistry Learning Platform
+# WebChem — Chemistry, in motion
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+WebChem is a chemistry-learning web app and PWA with lessons, chemistry calculators, quizzes/CBT practice, virtual learning tools, AI tutoring, learner profiles, and cloud progress.
 
-> A comprehensive, full-stack chemistry learning platform with interactive tools, 3D molecular visualization, virtual lab, AI tutor, and social learning features.
+## Current release candidate
 
-## 🚀 Quick Start
+- **Integration branch:** `webchem-upgrade`
+- **Frontend:** static `index.html` + PWA manifest/service worker
+- **Backend:** Node.js / Express / MongoDB in `backend/`
+- **Production API configured in frontend:** `https://webchem-production.up.railway.app`
+- **Preview source:** `smrutiranjandev0p/webchem-preview`
+
+The frontend was brought over from the preview project. The upgrade branch includes the newer backend routes needed by the frontend (email OTP registration/reset, Google sign-in, cloud progress, AI tutor, and admin-curated knowledge).
+
+## Run locally
+
+Requirements: Node.js 20 LTS recommended, and a MongoDB database.
 
 ```bash
-# Install dependencies
 npm install
-
-# Configure environment
 cp .env.example .env
-# Edit .env and add your MongoDB connection string
-
-# Start the server
+# Set real local values in .env (never commit secrets)
 npm run dev
 ```
 
-Backend runs on: http://localhost:5000
-API documentation: http://localhost:5000/api
+The API starts on `http://localhost:5000`. Serve the static frontend from a local HTTP server (not `file://`) and set `FRONTEND_URL` to that origin in the backend environment.
 
-## 🌟 Features
+## Backend environment
 
-### ✅ Implemented
-- ✅ Node.js/Express backend with MongoDB
-- ✅ JWT authentication & user management
-- ✅ Progress tracking with achievements
-- ✅ Chemistry calculation tools API
-- ✅ Lesson & reaction database
-- ✅ RESTful API endpoints
+Configure the following in the deployment provider’s secret/environment settings:
 
-### 🚧 Coming Soon
-- 3D Molecular Visualization (Three.js)
-- Virtual Chemistry Lab Simulator
-- Interactive Periodic Table
-- AI Chemistry Tutor
-- Quiz Engine
-- PWA & Mobile App
+- `NODE_ENV=production`
+- `PORT` (provided by Railway)
+- `MONGODB_URI` — correct production database connection
+- `JWT_SECRET` — strong, unique secret
+- `JWT_EXPIRE=7d`
+- `FRONTEND_URL` — the published frontend origin
+- `GOOGLE_CLIENT_ID` — OAuth client ID for the published domain
+- `OPENAI_API_KEY` and optional `OPENAI_MODEL`
+- `OTP_SECRET` — random secret at least 32 characters
+- `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, optional `SMTP_FROM`
 
-## 📁 Project Structure
+Do not commit `.env`, API keys, database URLs, JWT secrets, OTP secrets, or SMTP credentials. Keep production and staging databases/services isolated.
 
-```
-webchem/
-├── backend/          # Node.js/Express server
-├── frontend/         # Client-side application
-├── database/         # Seeds and migrations
-├── docs/            # Documentation
-└── tests/           # Test suites
-```
+## PWA
 
-## 🔌 API Endpoints
+- `manifest.webmanifest` provides install metadata and the app icon.
+- `sw.js` caches the static app shell for offline opening.
+- Auth, API, and learner-progress responses are intentionally excluded from service-worker caching to avoid storing account-specific data in the shared app cache.
 
-- **Auth**: `/api/auth` - Registration, login, profile
-- **Lessons**: `/api/lessons` - Browse and retrieve lessons
-- **Progress**: `/api/progress` - Track learning progress
-- **Reactions**: `/api/reactions` - Chemical reactions database
-- **Tools**: `/api/tools` - Chemistry calculators
+## Verification and release
 
-## 📝 Documentation
+The release workflow checks:
+- frontend inline JavaScript syntax
+- backend JavaScript syntax
+- PWA manifest/icon and service-worker safety
+- expected production API origin and key frontend/backend route compatibility
 
-- [Quick Start Guide](QUICKSTART.md) - Get up and running
-- [Architecture](ARCHITECTURE.md) - System design (coming soon)
-- [API Documentation](docs/API.md) - Endpoint reference (coming soon)
+Before production release, verify the production Railway service has the required environment variables, database backup/restore path, and rollback option. Then smoke-test registration/OTP, login/Google sign-in, refresh/session restore, progress save/restore, logout, AI tutor, and mobile PWA install on the deployed site.
 
-## 👨‍💻 Author
-
-**Smruti Ranjan**
-- GitHub: [@smrutiranjandev0p](https://github.com/smrutiranjandev0p)
-- Email: ranjansmrutibehera@gmail.com
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
----
-
-**Built with ❤️ for chemistry learners worldwide**
+The urea/fertilizer simulator is for learning only, not a validated industrial operating model.

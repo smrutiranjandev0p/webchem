@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { protect } = require('../middleware/auth');
+router.use(protect);
 
 router.post('/molar-mass', async (req, res) => {
   const { formula } = req.body;

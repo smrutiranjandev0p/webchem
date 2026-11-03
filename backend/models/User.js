@@ -2,9 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
-  email: { type: String, required: true, unique: true, lowercase: true },
-  password: { type: String, required: true, select: false },
+  username: { type: String, required: true, unique: true, trim: true, maxlength: 40 },
+  email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+  password: { type: String, required: function(){ return !this.googleId; }, select: false },
+  passwordIsHashed: { type: Boolean, default: false, select: false },
+  googleId: { type: String, unique: true, sparse: true },
+  emailVerified: { type: Boolean, default: true },
   avatar: { type: String },
   role: { type: String, enum: ['student', 'educator', 'admin'], default: 'student' },
   stats: {
@@ -18,13 +21,15 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-  this.password = await bcrypt.hash(this.password, 10);
+  if (!this.isModified('password') || !this.password) return next();
+  if (this.passwordIsHashed) { this.passwordIsHashed = false; return next(); }
+  this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 userSchema.methods.comparePassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
+  if (!this.password) return false;
+  return bcrypt.compare(password, this.password);
 };
 
 module.exports = mongoose.model('User', userSchema);

@@ -18,6 +18,8 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors({
   origin: [
     'http://localhost:8080',
+    'https://localhost',
+    'capacitor://localhost',
     'https://smrutiranjandev0p.github.io',
     process.env.FRONTEND_URL || 'http://localhost:8080'
   ],
@@ -49,12 +51,17 @@ const lessonRoutes = require('./routes/lessons');
 const progressRoutes = require('./routes/progress');
 const reactionRoutes = require('./routes/reactions');
 const toolRoutes = require('./routes/tools');
+const aiRoutes = require('./routes/ai');
+const knowledgeRoutes = require('./routes/knowledge');
+const { startKnowledgeScheduler } = require('./services/knowledgeScheduler');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/reactions', reactionRoutes);
 app.use('/api/tools', toolRoutes);
+app.use('/api/ai', aiRoutes);
+app.use('/api/knowledge', knowledgeRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
@@ -71,7 +78,8 @@ app.get('/api', (req, res) => {
       lessons: '/api/lessons',
       progress: '/api/progress',
       reactions: '/api/reactions',
-      tools: '/api/tools'
+      tools: '/api/tools',
+      knowledge: '/api/knowledge'
     }
   });
 });
@@ -88,6 +96,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 WebChem server running on http://localhost:${PORT}`);
+  startKnowledgeScheduler();
 });
 
 module.exports = app;

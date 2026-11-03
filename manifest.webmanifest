@@ -1,0 +1,19 @@
+{
+  "name": "WebChem — Chemistry, in motion",
+  "short_name": "WebChem",
+  "description": "Chemistry learning, virtual labs, quizzes and calculators.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1118",
+  "theme_color": "#0b1118",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icons/webchem-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

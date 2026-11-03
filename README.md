@@ -1,61 +1,188 @@
-# WebChem — Chemistry, in motion
+<div align="center">
 
-WebChem is a chemistry-learning web app and PWA with lessons, chemistry calculators, quizzes/CBT practice, virtual learning tools, AI tutoring, learner profiles, and cloud progress.
+# ⚗️ WebChem
 
-## Current release candidate
+### **THE CHEMISTRY LAB — REIMAGINED**
 
-- **Integration branch:** `webchem-upgrade`
-- **Frontend:** static `index.html` + PWA manifest/service worker
-- **Backend:** Node.js / Express / MongoDB in `backend/`
-- **Production API configured in frontend:** `https://webchem-production.up.railway.app`
-- **Preview source:** `smrutiranjandev0p/webchem-preview`
+*Explore the science. Master the concepts. Build your chemistry intuition.*
 
-The frontend was brought over from the preview project. The upgrade branch includes the newer backend routes needed by the frontend (email OTP registration/reset, Google sign-in, cloud progress, AI tutor, and admin-curated knowledge).
+<p>
+  <a href="https://smrutiranjandev0p.github.io/webchem/"><img src="https://img.shields.io/badge/🚀_LAUNCH_WEB-CHEM-00E5FF?style=for-the-badge&labelColor=07131D" alt="Launch WebChem"></a>
+  <a href="https://github.com/smrutiranjandev0p/webchem"><img src="https://img.shields.io/badge/GITHUB-REPOSITORY-9B5CFF?style=for-the-badge&labelColor=07131D" alt="GitHub repository"></a>
+</p>
 
-## Run locally
+<p>
+  <img src="https://img.shields.io/badge/CHEMISTRY-LEARNING-00D9A6?style=flat-square">
+  <img src="https://img.shields.io/badge/AI-ASSISTED-8B5CF6?style=flat-square">
+  <img src="https://img.shields.io/badge/WEB-APP-00B8D9?style=flat-square">
+  <img src="https://img.shields.io/badge/PWA-READY-FFB020?style=flat-square">
+</p>
 
-Requirements: Node.js 20 LTS recommended, and a MongoDB database.
+</div>
+
+---
+
+> [!NOTE]
+> **WebChem is an evolving chemistry-learning platform.** Features and availability may change as the project develops.
+
+## ◈ Welcome to the Lab
+
+WebChem brings chemistry learning into one interactive digital space—from foundational concepts and calculations to quizzes, guided practice, and AI-assisted learning.
+
+Whether you're revising for an exam, exploring chemistry concepts, or strengthening your laboratory knowledge, WebChem is designed to make learning more accessible and engaging.
+
+<div align="center">
+
+| 🧠 Learn | 🧪 Practice | ⚡ Explore |
+|:---:|:---:|:---:|
+| Chemistry concepts & learning resources | Quizzes, CBT-style practice & calculations | Interactive tools & virtual learning |
+
+</div>
+
+## ✦ Inside WebChem
+
+| Area | What you can explore |
+|---|---|
+| **Chemistry Learning** | Chemistry topics, concepts, and study resources |
+| **Calculators & Tools** | Useful chemistry calculations and learning utilities |
+| **Quiz & CBT Practice** | Question practice, answer review, and exam-style learning |
+| **AI Tutor** | AI-assisted chemistry questions and explanations (when configured and available) |
+| **Virtual Learning** | Educational simulations and guided concept exploration |
+| **Learner Progress** | Account-based progress and learning continuity (when signed in) |
+| **Progressive Web App** | Installable app experience on supported browsers |
+
+## 🚀 Open WebChem
+
+**Start exploring:** [smrutiranjandev0p.github.io/webchem](https://smrutiranjandev0p.github.io/webchem/)
+
+WebChem is hosted as a web application. Open the link in a modern browser; on supported devices, your browser may offer an option to install it.
+
+## 🛠️ Technology
+
+<div align="center">
+
+| Frontend | Backend | Data & Services |
+|:---:|:---:|:---:|
+| HTML · CSS · JavaScript | Node.js · Express | MongoDB |
+| Progressive Web App | REST API | Google OAuth (optional) |
+| Responsive interface | AI integration (optional) | Email/OTP (configured server-side) |
+
+</div>
+
+## 🧑‍💻 Run locally
+
+### Requirements
+
+- Node.js **20 or newer**
+- MongoDB connection (local or hosted)
+- Git
+
+### Setup
 
 ```bash
+git clone https://github.com/smrutiranjandev0p/webchem.git
+cd webchem
 npm install
+```
+
+Create a local environment file from the example:
+
+```bash
 cp .env.example .env
-# Set real local values in .env (never commit secrets)
+```
+
+Add your own development credentials to `.env`, then start the backend:
+
+```bash
 npm run dev
 ```
 
-The API starts on `http://localhost:5000`. Serve the static frontend from a local HTTP server (not `file://`) and set `FRONTEND_URL` to that origin in the backend environment.
+The API normally runs at `http://localhost:5000`. Serve the frontend through a local HTTP server rather than opening the HTML file directly. Configure `FRONTEND_URL` to match your local frontend origin.
 
-## Backend environment
+> **Security:** Never commit your `.env` file, OAuth secrets, API keys, database connection strings, SMTP passwords, or JWT/OTP secrets.
 
-Configure the following in the deployment provider’s secret/environment settings:
+## ⚙️ Environment configuration
 
-- `NODE_ENV=production`
-- `PORT` (provided by Railway)
-- `MONGODB_URI` — correct production database connection
-- `JWT_SECRET` — strong, unique secret
-- `JWT_EXPIRE=7d`
-- `FRONTEND_URL` — the published frontend origin
-- `GOOGLE_CLIENT_ID` — OAuth client ID for the published domain
-- `OPENAI_API_KEY` and optional `OPENAI_MODEL`
-- `OTP_SECRET` — random secret at least 32 characters
-- `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`, optional `SMTP_FROM`
+The backend may use these environment variables depending on enabled features:
 
-Do not commit `.env`, API keys, database URLs, JWT secrets, OTP secrets, or SMTP credentials. Keep production and staging databases/services isolated.
+| Variable | Purpose |
+|---|---|
+| `NODE_ENV` | Runtime environment |
+| `PORT` | Server port (Railway may provide this automatically) |
+| `MONGODB_URI` | MongoDB connection |
+| `JWT_SECRET` | Session token signing secret |
+| `JWT_EXPIRE` | Token lifetime |
+| `FRONTEND_URL` | Allowed frontend origin |
+| `GOOGLE_CLIENT_ID` | Google Sign-In client ID |
+| `OPENAI_API_KEY` | AI Tutor provider key |
+| `OPENAI_MODEL` | AI model selection |
+| `OTP_SECRET` | OTP hashing secret |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE` | Email server settings |
+| `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | Email sender credentials |
 
-## PWA
+Set secrets only in local ignored environment files or your hosting provider’s secret-variable settings. **Do not put real secrets in README, source code, screenshots, or commits.**
 
-- `manifest.webmanifest` provides install metadata and the app icon.
-- `sw.js` caches the static app shell for offline opening.
-- Auth, API, and learner-progress responses are intentionally excluded from service-worker caching to avoid storing account-specific data in the shared app cache.
+## 📲 Progressive Web App
 
-## Verification and release
+WebChem includes PWA support through:
 
-The release workflow checks:
-- frontend inline JavaScript syntax
-- backend JavaScript syntax
-- PWA manifest/icon and service-worker safety
-- expected production API origin and key frontend/backend route compatibility
+- `manifest.webmanifest` — app metadata and install presentation
+- `sw.js` — service-worker app-shell caching
+- App icons under `icons/`
 
-Before production release, verify the production Railway service has the required environment variables, database backup/restore path, and rollback option. Then smoke-test registration/OTP, login/Google sign-in, refresh/session restore, progress save/restore, logout, AI tutor, and mobile PWA install on the deployed site.
+The service worker is intended to cache the app shell, not private account data. Some online features require an active connection.
 
-The urea/fertilizer simulator is for learning only, not a validated industrial operating model.
+## 🧭 Project structure
+
+```text
+webchem/
+├── index.html                 # WebChem frontend
+├── manifest.webmanifest       # PWA manifest
+├── sw.js                     # Service worker
+├── icons/                     # App icons
+├── backend/
+│   ├── server.js              # Express server
+│   ├── routes/                # API routes
+│   ├── models/                # MongoDB models
+│   └── services/              # Backend services
+├── tests/                     # Project tests (where present)
+├── .env.example               # Environment variable template
+└── package.json
+```
+
+## 🔐 Privacy & safety
+
+- Keep credentials and secrets out of Git.
+- Use separate databases and secrets for development and production.
+- Never share OTPs, passwords, API keys, or session tokens.
+- Treat AI responses and educational simulations as learning aids; verify important scientific or industrial decisions against authoritative sources.
+- WebChem's urea/fertilizer simulator is **educational**, not a validated industrial process-control model.
+
+## 🧪 Contributing
+
+Ideas, bug reports, and improvements are welcome.
+
+1. Fork the repository.
+2. Create a focused branch.
+3. Make and test your changes.
+4. Open a pull request with a clear description and screenshots when relevant.
+
+Please avoid committing secrets, generated credentials, or unrelated changes.
+
+## 📜 License
+
+See the repository's license file for the applicable terms.
+
+---
+
+<div align="center">
+
+### **Curiosity looks good on you.**
+
+*Keep exploring. Keep experimenting. Keep learning.*
+
+[**Enter WebChem →**](https://smrutiranjandev0p.github.io/webchem/)
+
+<sub>Built for curious minds, chemistry learners, and future scientists. ⚗️</sub>
+
+</div>

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js",
-    "test": "echo \"Tests coming soon\" && exit 0"
+    "test": "python -m unittest discover -s tests -v"
   },
   "keywords": [
     "chemistry",

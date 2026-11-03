@@ -25,7 +25,7 @@ router.post('/chat', aiLimiter, async (req, res) => {
     if (!process.env.OPENAI_API_KEY) {
       return res.status(503).json({
         success: false,
-        error: 'WebChem AI is not configured yet. Configure OPENAI_API_KEY in the Railway service running WebChem's production API.'
+        error: 'WebChem AI is not configured yet. Configure OPENAI_API_KEY in the Railway production API service.'
       });
     }
 
@@ -80,7 +80,7 @@ router.post('/chat', aiLimiter, async (req, res) => {
   } catch (error) {
     console.error('WebChem AI request failed:', error.status || '', error.message || 'Unknown error');
     if (error.status === 401) {
-      return res.status(503).json({ success: false, error: 'OpenAI rejected the configured API key. In Railway's production service, verify OPENAI_API_KEY is active and correct; check OpenAI billing/project access, then redeploy the backend.' });
+      return res.status(503).json({ success: false, error: 'OpenAI rejected the configured API key. In the Railway production service, verify OPENAI_API_KEY is active and correct; check OpenAI billing/project access, then redeploy the backend.' });
     }
     if (error.status === 429) {
       return res.status(429).json({ success: false, error: 'AI usage limit reached. Please try again shortly.' });

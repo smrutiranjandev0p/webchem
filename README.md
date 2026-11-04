@@ -51,6 +51,148 @@ Whether you're revising for an exam, exploring chemistry concepts, or strengthen
 | **Learner Progress** | Account-based progress and learning continuity (when signed in) |
 | **Progressive Web App** | Installable app experience on supported browsers |
 
+## 🌌 THE NEXT FRONTIER — WebChem 2.0
+
+<div align="center">
+
+<img src="https://img.shields.io/badge/PROJECT-COSMIC_UPGRADE-00F5D4?style=for-the-badge&labelColor=050B18">
+<img src="https://img.shields.io/badge/ROADMAP-FUTURE_IN_BUILD-9B5CFF?style=for-the-badge&labelColor=050B18">
+<img src="https://img.shields.io/badge/FOCUS-LEARN_%7C_CREATE_%7C_SCALE-FF3CAC?style=for-the-badge&labelColor=050B18">
+
+### **A smarter lab. A bigger universe. A new era of learning.**
+
+*The next evolution of WebChem is being imagined as a futuristic, app-like chemistry ecosystem.*
+
+</div>
+
+> [!IMPORTANT]
+> **This section is the vision and roadmap—not a promise that every feature is already available.** Planned features will roll out progressively after development, security review, and testing.
+
+### ◈ FUTURE SYSTEMS // ROADMAP
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🪐 01 — NEURAL LEARNING CORE
+**A personalized chemistry intelligence layer**
+
+- Adaptive learning paths
+- AI chemistry tutor upgrades
+- Smart topic recommendations
+- Personalized revision plans
+- Learning insights and mastery tracking
+
+</td>
+<td width="50%" valign="top">
+
+### ⚡ 02 — EXAM SIMULATION ENGINE
+**Train like the real examination**
+
+- Advanced CBT simulator
+- Timed and sectional exams
+- Negative marking options
+- Performance breakdowns
+- Question banks and exam analytics
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🧬 03 — PREMIUM ACCESS MATRIX
+**A secure learning experience with optional upgrades**
+
+- Free and Premium learning tiers
+- Premium content and advanced tools
+- Subscription and account management
+- Secure payment verification
+- Purchase history and access restoration
+
+</td>
+<td width="50%" valign="top">
+
+### 🌐 04 — COMMUNITY & SIGNAL HUB
+**Connect learners to the WebChem universe**
+
+- Updates and announcements
+- Help and support center
+- Community channels
+- Feedback and issue reporting
+- Achievements and learning milestones
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 📱 05 — MOBILE APP EVOLUTION
+**A seamless app-like experience**
+
+- Refined mobile navigation
+- PWA installation improvements
+- Persistent mini-player experience
+- Responsive floating assistant
+- Future Android app exploration
+
+</td>
+<td width="50%" valign="top">
+
+### 🛡️ 06 — TRUST & CONTROL CENTER
+**Built for reliability and responsible growth**
+
+- Account and privacy controls
+- Data export and account deletion
+- Secure user access and permissions
+- Service health and diagnostics
+- Improved recovery and reliability
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🎛️ 07 — PERSONALIZATION MATRIX
+**Make the lab feel like your own**
+
+- Theme and appearance controls
+- Language preferences
+- Custom learning preferences
+- Progress and study settings
+- Enhanced accessibility
+
+</td>
+<td width="50%" valign="top">
+
+### 🏛️ 08 — INSTITUTIONAL ORBIT
+**Expand beyond individual learners**
+
+- College and coaching partnerships
+- Group learning spaces
+- Institutional dashboards
+- Bulk access plans
+- Future educator tools
+
+</td>
+</tr>
+</table>
+
+### ✦ THE LONG-TERM VISION
+
+<div align="center">
+
+| **LEARN** | **MASTER** | **CONNECT** | **EVOLVE** |
+|:---:|:---:|:---:|:---:|
+| Intelligent chemistry learning | Exam-ready practice | A connected learner community | A growing digital chemistry platform |
+
+</div>
+
+**Our north star:** build a chemistry platform that feels futuristic, works reliably, respects user privacy, and makes advanced learning accessible.
+
+<sub>Concepts, timelines, availability, and monetization plans may change as WebChem evolves. Premium services, payments, and institutional features will only be introduced after implementation and appropriate compliance checks.</sub>
+
+---
+
 ## 🚀 Open WebChem
 
 **Start exploring:** [smrutiranjandev0p.github.io/webchem](https://smrutiranjandev0p.github.io/webchem/)

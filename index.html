@@ -1700,4 +1700,18 @@ function learnerLocalKey(base){const u=typeof currentUser!=='undefined'&&current
 if('serviceWorker' in navigator && location.protocol==='https:'){
  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(err=>console.warn('WebChem offline support unavailable:',err)));
 }
-})();</script></body></html>
+})();</script><style>
+#webchemOfflineNotice{position:fixed;z-index:100000;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92vw,520px);padding:10px 14px;border:1px solid #47766c;border-radius:14px;background:#102b29;color:#dffbf2;box-shadow:0 8px 30px #0008;font:13px/1.4 system-ui,sans-serif;display:none}
+#webchemOfflineNotice[data-state="offline"]{display:block}
+#webchemOfflineNotice strong{color:#75f0c2}
+</style>
+<div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
+<script>
+(function(){
+ const notice=document.getElementById('webchemOfflineNotice');if(!notice)return;
+ function update(){const offline=!navigator.onLine;notice.dataset.state=offline?'offline':'online';notice.innerHTML=offline?'<strong>You’re offline</strong> · Saved WebChem learning tools are available. Login, AI Tutor and cloud sync need internet.':'<strong>Back online</strong> · Connection restored.';}
+ window.addEventListener('offline',update);window.addEventListener('online',()=>{update();setTimeout(()=>{if(navigator.onLine)notice.dataset.state='online'},3500)});
+ update();
+ if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('controllerchange',()=>{});
+})();
+</script></body></html>

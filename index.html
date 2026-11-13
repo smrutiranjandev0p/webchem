@@ -1858,6 +1858,76 @@ if('serviceWorker' in navigator && location.protocol==='https:'){
  #authGate .auth-form-side{padding-left:14px!important;padding-right:14px!important}
  #authGate .gate-card{padding:20px 17px!important}
 }
+
+/* WEB CHEM // premium workspace visual system v2 */
+:root{
+ --bg:#080e19;--panel:#111b2b;--panel2:#17263a;--line:#293b55;
+ --text:#f2f6ff;--muted:#9aacc5;--mint:#67f0d0;--blue:#75bdff;
+ --yellow:#ffd27d;--pink:#ff91b5;--radius:21px;
+}
+body{background:radial-gradient(ellipse at 8% 0%,rgba(34,211,190,.10),transparent 30%),radial-gradient(ellipse at 92% 8%,rgba(125,93,255,.12),transparent 32%),linear-gradient(145deg,#080e19,#0b1220 52%,#101126)!important;color:var(--text)!important}
+.app{background:transparent!important}
+.sidebar{background:linear-gradient(180deg,rgba(13,24,40,.97),rgba(9,16,29,.97))!important;border-right:1px solid rgba(132,165,220,.17)!important;box-shadow:12px 0 42px rgba(0,0,0,.12)}
+.brandmark{background:linear-gradient(145deg,#69f2d0,#68baff 58%,#a98aff)!important;box-shadow:0 6px 22px rgba(91,215,219,.24)!important}
+.brand b{letter-spacing:-.7px}
+.navlabel{color:#8298b8!important}
+.nav button{color:#aebdd3!important;border:1px solid transparent!important;transition:background .22s,border-color .22s,transform .22s!important}
+.nav button:hover{background:linear-gradient(100deg,rgba(62,219,198,.13),rgba(121,142,255,.09))!important;border-color:rgba(102,220,220,.18)!important;transform:translateX(2px)}
+.nav button.active{background:linear-gradient(100deg,rgba(70,232,199,.18),rgba(105,149,255,.13))!important;border-color:rgba(104,230,211,.28)!important;color:#8ff5dc!important;box-shadow:inset 3px 0 0 #69edcf,0 7px 24px rgba(18,185,167,.07)!important}
+.nav .ico{filter:drop-shadow(0 0 7px rgba(103,240,208,.18))}
+.sidebottom{background:linear-gradient(140deg,rgba(22,76,75,.8),rgba(34,40,79,.72))!important;border:1px solid rgba(103,231,209,.24)!important;box-shadow:0 15px 38px rgba(0,0,0,.18)}
+.main{background:transparent!important}
+.topbar{position:sticky;top:0;z-index:40;padding:12px 15px;margin:0 -15px 28px!important;border:1px solid rgba(138,167,218,.13);border-top:0;border-radius:0 0 18px 18px;background:rgba(9,16,29,.78)!important;backdrop-filter:blur(18px);box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.crumb b{color:#8ef1d8!important}
+.search,.theme-select,.authstatus,.avatar{border-color:rgba(139,169,220,.2)!important;background:rgba(24,37,57,.8)!important}
+.search:focus-within{border-color:#65dcca!important;box-shadow:0 0 0 3px rgba(101,220,202,.1)}
+.avatar{box-shadow:0 0 0 3px rgba(113,177,255,.09)}
+.hero{gap:16px}
+.heroMain{background:radial-gradient(circle at 86% 20%,rgba(89,204,255,.2),transparent 27%),radial-gradient(circle at 74% 90%,rgba(166,113,255,.16),transparent 32%),linear-gradient(125deg,#123d43,#172b49 58%,#28264c)!important;border:1px solid rgba(112,216,218,.28)!important;box-shadow:0 22px 55px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.07)}
+.heroMain:after{color:rgba(111,235,218,.12)!important;text-shadow:0 0 45px rgba(87,195,255,.12)}
+.hero h1{color:#fff!important;text-shadow:0 8px 30px rgba(0,0,0,.2)}
+.hero .eyebrow,.eyebrow{color:#80f0d4!important}
+.hero p{color:#c0cee2!important}
+.btn.primary{background:linear-gradient(100deg,#62e9c5,#70c9f7 58%,#aa91ff)!important;color:#081a28!important;border:1px solid rgba(255,255,255,.26)!important;box-shadow:0 9px 26px rgba(83,202,210,.17),inset 0 1px 0 rgba(255,255,255,.48)!important}
+.btn.primary:hover{filter:brightness(1.07) saturate(1.1);box-shadow:0 13px 32px rgba(83,202,210,.24)!important}
+.statcard{background:linear-gradient(145deg,rgba(24,39,60,.96),rgba(17,26,44,.96))!important;border-color:rgba(135,165,218,.2)!important;box-shadow:0 12px 30px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.035)}
+.statcard:nth-child(1) .staticon{background:rgba(54,213,190,.14)!important;color:#71f0d4!important}
+.statcard:nth-child(2) .staticon{background:rgba(115,160,255,.15)!important;color:#91baff!important}
+.statcard:nth-child(3) .staticon{background:rgba(255,142,183,.14)!important;color:#ff9cbd!important}
+.sectionhead h2,.viewhead h1{letter-spacing:-.7px!important}
+.sectionhead h2{background:linear-gradient(90deg,#f4f8ff,#b8d8ff 70%,#bba7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.feature{background:linear-gradient(145deg,rgba(23,39,60,.96),rgba(15,24,42,.98))!important;border-color:rgba(131,165,218,.18)!important;box-shadow:0 12px 30px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.035)}
+.feature:before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,#63e9c9,#73bfff,#ad8dff,#ff9ab8);opacity:.72}
+.feature:hover{transform:translateY(-4px)!important;border-color:rgba(103,229,210,.42)!important;box-shadow:0 20px 42px rgba(0,0,0,.23),0 0 28px rgba(73,204,196,.07)!important}
+.featureicon{background:linear-gradient(145deg,rgba(72,220,196,.19),rgba(117,145,255,.18))!important;border:1px solid rgba(128,212,225,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.feature h3{color:#f2f7ff!important}
+.feature p{color:#aabbd1!important}
+.tag{color:#85f0d6!important;border-color:rgba(105,228,203,.3)!important;background:rgba(54,190,169,.07)}
+.panel,.lesson,.quizq,.result,.reaction{background:linear-gradient(145deg,rgba(20,34,53,.96),rgba(14,23,39,.98))!important;border-color:rgba(132,164,215,.19)!important;box-shadow:0 12px 30px rgba(0,0,0,.11),inset 0 1px 0 rgba(255,255,255,.03)}
+.panel h3,.lesson h3{color:#f1f6ff}
+.lesson .meta{color:#80e9d3!important}
+.field input,.field select{background:rgba(7,15,29,.78)!important;border-color:rgba(135,164,212,.26)!important}
+.field input:focus,.field select:focus{border-color:#70e6d1!important;box-shadow:0 0 0 3px rgba(103,230,208,.1)}
+.continue{background:linear-gradient(100deg,rgba(49,204,178,.09),rgba(106,135,255,.08))!important;border-color:rgba(120,169,213,.2)!important}
+.progressbar{background:#26374d!important}
+.progressbar>span,.progressbar>div{background:linear-gradient(90deg,#62e8c4,#68bdff,#a88cff)!important}
+.chip{border-color:rgba(132,164,215,.22)!important;background:rgba(22,35,54,.8)!important;color:#b6c6dc!important}
+.chip.active{background:linear-gradient(100deg,rgba(65,220,190,.2),rgba(116,144,255,.16))!important;border-color:rgba(103,231,207,.38)!important;color:#8cf1d8!important}
+.drawer-scrim{backdrop-filter:blur(4px)}
+@media(max-width:800px){
+ .main{padding:16px 14px 90px!important}
+ .topbar{margin:0 -4px 20px!important;padding:10px 11px!important}
+ .hero{grid-template-columns:1fr!important}
+ .heroMain{min-height:220px!important;border-radius:22px!important}
+ .heroStats{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+ .statcard{padding:12px 9px!important;border-radius:15px!important;gap:5px!important}
+ .statcard strong{font-size:21px!important}
+ .statcard .label{font-size:10px!important}
+ .staticon{width:34px!important;height:34px!important;border-radius:11px!important}
+ .feature{border-radius:17px!important}
+ .panel,.lesson,.quizq{border-radius:17px!important}
+}
+@media(prefers-reduced-motion:reduce){.nav button,.feature,.btn{transition:none!important}}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

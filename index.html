@@ -1956,6 +1956,56 @@ body{background:radial-gradient(ellipse at 8% 0%,rgba(34,211,190,.10),transparen
  #view-learn .lesson{padding:18px!important}
  #view-learn .lesson p{min-height:0}
 }
+
+/* VIRTUAL LAB // immersive scientific workbench */
+#view-lab>.viewhead{position:relative;isolation:isolate;overflow:hidden;padding:clamp(24px,4vw,42px)!important;min-height:190px;border:1px solid rgba(113,206,226,.28)!important;border-radius:26px!important;background:radial-gradient(circle at 82% 20%,rgba(73,210,255,.24),transparent 24%),radial-gradient(circle at 75% 95%,rgba(159,112,255,.22),transparent 35%),radial-gradient(circle at 12% 100%,rgba(68,235,190,.12),transparent 35%),linear-gradient(120deg,#102f43 0%,#17294b 55%,#30234c 100%)!important;box-shadow:0 24px 60px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.1)!important}
+#view-lab>.viewhead:after{content:"⚗";position:absolute;right:5%;top:50%;transform:translateY(-55%) rotate(-12deg);font-size:clamp(100px,17vw,190px);line-height:1;color:rgba(151,239,226,.14);text-shadow:0 0 45px rgba(89,219,226,.2);pointer-events:none;z-index:-1}
+#view-lab>.viewhead .eyebrow{color:#83f2d9!important;letter-spacing:2px!important}
+#view-lab>.viewhead h1{color:#fff!important;font-size:clamp(32px,4vw,48px)!important;letter-spacing:-1.3px!important;text-shadow:0 8px 28px rgba(0,0,0,.22)}
+#view-lab>.viewhead p{color:#c2d5eb!important;max-width:560px;line-height:1.7}
+#view-lab>.field{margin:20px 0 14px!important;padding:15px 17px;border:1px solid rgba(132,170,220,.18);border-radius:17px;background:linear-gradient(120deg,rgba(20,39,60,.8),rgba(19,27,48,.75))}
+#view-lab>.field input{max-width:100%;background:rgba(7,16,31,.76)!important}
+#view-lab #reactionList{display:grid;gap:10px}
+#view-lab .sectionhead{margin:28px 0 15px!important;padding:0 2px}
+#view-lab .sectionhead h2{font-size:clamp(21px,2.5vw,28px)!important;letter-spacing:-.6px}
+#view-lab .sectionhead p{color:#9eb1ca!important}
+#view-lab .lab-sim-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:17px!important;align-items:start}
+#view-lab .lab-sim{position:relative;overflow:hidden;padding:clamp(18px,2.2vw,25px)!important;border-radius:22px!important;background:linear-gradient(145deg,rgba(22,39,62,.97),rgba(12,23,41,.99))!important;border:1px solid rgba(128,169,221,.2)!important;box-shadow:0 17px 40px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.045)!important}
+#view-lab .lab-sim:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#5de9c7,#70bdff,#a98bff,#ff9fc2);opacity:.9}
+#view-lab .lab-sim>.eyebrow{display:inline-flex;padding:5px 9px;border:1px solid rgba(103,228,205,.2);border-radius:999px;background:rgba(63,208,180,.07);color:#83efd5!important;font-size:10px!important;letter-spacing:1.2px}
+#view-lab .lab-sim h3{font-size:clamp(18px,2vw,22px)!important;letter-spacing:-.45px;color:#f4f7ff!important;margin:12px 0 8px!important}
+#view-lab .lab-sim>p{color:#aebfd6!important;line-height:1.65}
+#view-lab .lab-controls{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;margin:17px 0!important}
+#view-lab .lab-controls label,#view-lab .field label{display:flex;flex-direction:column;gap:7px;color:#bdcce0!important;font-size:12px!important;font-weight:650}
+#view-lab .lab-controls input,#view-lab .lab-controls select,#view-lab .field input,#view-lab .field select{width:100%;min-width:0;box-sizing:border-box;background:rgba(6,15,30,.82)!important;color:#eff7ff!important;border:1px solid rgba(130,166,218,.25)!important;border-radius:11px!important;padding:11px 12px!important}
+#view-lab .lab-controls input:focus,#view-lab .lab-controls select:focus,#view-lab .field input:focus{border-color:#68e5d0!important;box-shadow:0 0 0 3px rgba(104,229,208,.1)!important;outline:none}
+#view-lab .lab-sim .btn.primary{border-radius:12px!important}
+#view-lab .result{border:1px solid rgba(105,222,201,.2)!important;border-radius:14px!important;background:linear-gradient(110deg,rgba(34,137,126,.13),rgba(84,103,184,.11))!important;color:#d8e8f7!important;padding:13px 15px!important;line-height:1.6}
+#view-lab .beaker-stage{display:flex!important;align-items:center;justify-content:center;gap:24px!important;min-height:205px;margin:17px 0!important;padding:16px;border-radius:17px;background:radial-gradient(circle at 25% 50%,rgba(65,219,194,.12),transparent 35%),linear-gradient(135deg,rgba(8,20,36,.78),rgba(24,34,60,.68))!important;border:1px solid rgba(128,166,220,.16)}
+#view-lab .beaker{filter:drop-shadow(0 0 17px rgba(68,212,225,.16))}
+#view-lab .ph-meter{min-width:130px}
+#view-lab .molecule-stage,#view-lab .shell-stage,#view-lab .mechanism-stage,#view-lab #organicMechanismDiagram{border:1px solid rgba(126,168,221,.2)!important;border-radius:17px!important;background:radial-gradient(circle at 50% 40%,rgba(67,204,211,.1),transparent 48%),linear-gradient(140deg,rgba(7,18,34,.9),rgba(21,29,53,.85))!important;overflow:hidden}
+#view-lab .molecule-library-meta,#view-lab .element-list-meta{color:#91a9c5!important;font-size:11px!important}
+#view-lab .lab-action-row{display:flex;align-items:center;flex-wrap:wrap;gap:9px!important;margin:13px 0!important}
+#view-lab .lab-action-row .btn{border-radius:10px!important}
+#view-lab .periodic-scroll{border:1px solid rgba(129,168,220,.2);border-radius:15px;background:rgba(5,14,27,.65);padding:9px}
+#view-lab .element-selected{margin:12px 0;padding:12px;border-radius:13px;background:linear-gradient(110deg,rgba(58,205,183,.12),rgba(103,130,255,.1));border:1px solid rgba(108,222,208,.2)}
+#view-lab .lab-sim .panel{background:rgba(10,20,36,.68)!important;border-color:rgba(131,167,218,.17)!important;border-radius:15px!important}
+#view-lab .progressbar{height:9px!important;border-radius:99px!important;overflow:hidden}
+#view-lab .progressbar>span,#view-lab .progressbar>div{border-radius:99px!important;background:linear-gradient(90deg,#61e8c5,#69bfff,#aa8cff)!important}
+#view-lab .lab-sim a{color:#7cebd5}
+@media(max-width:900px){#view-lab .lab-sim-grid{grid-template-columns:1fr!important}}
+@media(max-width:650px){
+ #view-lab>.viewhead{min-height:165px!important;padding:23px 19px!important;border-radius:21px!important}
+ #view-lab>.viewhead:after{right:1%;font-size:112px;opacity:.8}
+ #view-lab .lab-sim{padding:17px!important;border-radius:18px!important}
+ #view-lab .lab-controls{grid-template-columns:1fr 1fr!important;gap:9px!important}
+ #view-lab .lab-controls input,#view-lab .lab-controls select{padding:10px 9px!important;font-size:13px!important}
+ #view-lab .beaker-stage{gap:12px!important;padding:11px!important;min-height:180px}
+ #view-lab .ph-meter{min-width:105px}
+ #view-lab .lab-action-row{gap:7px!important}
+}
+@media(max-width:370px){#view-lab .lab-controls{grid-template-columns:1fr!important}}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

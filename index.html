@@ -1765,6 +1765,8 @@ if('serviceWorker' in navigator && location.protocol==='https:'){
 @keyframes wcOrbitC{from{transform:translate(-50%,-50%) rotateX(52deg) rotateY(42deg) rotateZ(0deg)}to{transform:translate(-50%,-50%) rotateX(52deg) rotateY(42deg) rotateZ(360deg)}}
 @media(max-width:800px){#authGate .auth-showcase{display:none!important}}
 @media(prefers-reduced-motion:reduce){#authGate .orbital-ring{animation:none!important}}
+
+#authGate .orbital-stage:before,#authGate .orbital-stage:after{content:none!important;display:none!important}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

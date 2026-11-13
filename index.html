@@ -1825,6 +1825,39 @@ if('serviceWorker' in navigator && location.protocol==='https:'){
  #authGate .gate-card{padding:25px 21px!important;border-radius:22px!important}
 }
 @media(prefers-reduced-motion:reduce){#authGate .gate-primary{transition:none!important}}
+
+/* Mobile authentication: retain a compact brand + orbital hero above the sign-in form. */
+@media(max-width:800px){
+ #authGate .auth-layout{display:flex!important;flex-direction:column!important;min-height:100svh!important;justify-content:flex-start!important;gap:0!important}
+ #authGate .auth-layout .auth-showcase{display:flex!important;position:relative!important;flex:0 0 auto!important;width:100%!important;min-height:0!important;height:clamp(238px,34svh,310px)!important;box-sizing:border-box!important;padding:22px 22px 18px!important;overflow:hidden!important;border-right:0!important;border-bottom:1px solid rgba(155,190,255,.16)!important}
+ #authGate .auth-show-brand{font-size:21px!important;position:relative!important;z-index:8!important}
+ #authGate .auth-show-copy{position:relative!important;z-index:7!important;margin:auto 0 0!important;padding-top:72px!important;max-width:70%!important}
+ #authGate .auth-show-copy h2{font-size:clamp(27px,7vw,36px)!important;line-height:1.02!important;letter-spacing:-1.2px!important;margin:7px 0 8px!important}
+ #authGate .auth-kicker{font-size:9px!important;letter-spacing:1.6px!important}
+ #authGate .auth-show-copy p{font-size:11px!important;line-height:1.45!important;max-width:290px!important;margin:0!important}
+ #authGate .auth-show-foot{display:none!important}
+ #authGate .orbital-stage{display:block!important;width:clamp(155px,43vw,205px)!important;height:clamp(155px,43vw,205px)!important;top:10px!important;right:5px!important;left:auto!important;bottom:auto!important;opacity:.95!important}
+ #authGate .orbital-core{width:54px!important;height:54px!important}
+ #authGate .orbital-core span{font-size:31px!important}
+ #authGate .orbital-ring{width:84%!important;height:35%!important}
+ #authGate .orbital-ring-b{width:78%!important;height:31%!important}
+ #authGate .orbital-ring-c{width:91%!important;height:39%!important}
+ #authGate .orbital-planet{width:10px!important;height:10px!important;top:-5px!important}
+ #authGate .planet-violet{width:8px!important;height:8px!important}
+ #authGate .planet-gold{width:7px!important;height:7px!important}
+ #authGate .auth-form-side{display:flex!important;flex:1 0 auto!important;width:100%!important;min-height:0!important;box-sizing:border-box!important;justify-content:flex-start!important;padding:18px 18px calc(24px + env(safe-area-inset-bottom))!important}
+ #authGate .auth-form-top{width:min(100%,450px)!important;margin:0 auto 12px!important}
+ #authGate .gate-card{width:min(100%,450px)!important;box-sizing:border-box!important;padding:23px 20px!important}
+ #authGate .auth-legal{display:block!important;font-size:10px!important;text-align:center!important;margin-top:12px!important}
+}
+@media(max-width:380px){
+ #authGate .auth-layout .auth-showcase{height:228px!important;padding:18px 17px 15px!important}
+ #authGate .auth-show-copy{max-width:73%!important;padding-top:66px!important}
+ #authGate .auth-show-copy h2{font-size:26px!important}
+ #authGate .orbital-stage{width:148px!important;height:148px!important;right:0!important;top:14px!important}
+ #authGate .auth-form-side{padding-left:14px!important;padding-right:14px!important}
+ #authGate .gate-card{padding:20px 17px!important}
+}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

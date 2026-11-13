@@ -2074,6 +2074,57 @@ body{background:radial-gradient(ellipse at 8% 0%,rgba(34,211,190,.10),transparen
 }
 @media(max-width:380px){#view-quiz #quizArea .quiz-config{grid-template-columns:1fr!important}#view-quiz #quizArea .quiz-palette>div{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
 @media(prefers-reduced-motion:reduce){#view-quiz #quizArea .answer,#view-quiz #quizArea .quiz-palette-btn{transition:none!important}}
+
+/* AI TUTOR // premium chemistry intelligence workspace */
+#view-tutor .tutor-shell{max-width:1220px!important;padding:4px 0 24px!important}
+#view-tutor .tutor-shell>header{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;margin-bottom:17px;border:1px solid rgba(133,170,222,.18);border-radius:17px;background:rgba(12,22,39,.76);backdrop-filter:blur(16px)}
+#view-tutor .tutor-brand{color:#f4f7ff!important;font-size:18px!important;letter-spacing:-.4px}
+#view-tutor .tutor-logo{display:grid;place-items:center;width:42px;height:42px;padding:0!important;border-radius:14px!important;color:#071a2a!important;background:linear-gradient(140deg,#6af0ce,#78c7ff 58%,#b39aff)!important;box-shadow:0 8px 24px rgba(93,210,210,.22)}
+#view-tutor .tutor-shell>header>a{font-size:12px;font-weight:700;color:#8debd7!important}
+#view-tutor .tutor-hero{position:relative;isolation:isolate;overflow:hidden;padding:clamp(25px,4vw,42px)!important;min-height:205px;margin-bottom:18px!important;border:1px solid rgba(128,174,229,.25)!important;border-radius:25px!important;background:radial-gradient(circle at 83% 20%,rgba(88,146,255,.24),transparent 25%),radial-gradient(circle at 74% 100%,rgba(67,226,190,.18),transparent 35%),linear-gradient(125deg,#103b47,#1a2c50 58%,#30264d)!important;box-shadow:0 22px 54px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.08)!important}
+#view-tutor .tutor-hero:after{content:"✧";position:absolute;right:8%;top:50%;transform:translateY(-50%);font-size:clamp(110px,18vw,190px);color:rgba(176,211,255,.13);text-shadow:0 0 50px rgba(103,172,255,.22);z-index:-1}
+#view-tutor .tutor-eyebrow{color:#83f2d8!important;letter-spacing:2px!important}
+#view-tutor .tutor-hero h1{font-size:clamp(31px,4.2vw,48px)!important;line-height:1.08;letter-spacing:-1.3px;color:#fff!important;text-shadow:0 8px 30px rgba(0,0,0,.2)}
+#view-tutor .tutor-hero p{max-width:560px;color:#c3d4e9!important;line-height:1.7}
+#view-tutor .tutor-grid{grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr)!important;gap:17px!important;align-items:stretch}
+#view-tutor .tutor-panel{position:relative;overflow:hidden;padding:clamp(17px,2.3vw,24px)!important;border-radius:22px!important;background:linear-gradient(145deg,rgba(23,41,66,.98),rgba(12,23,41,.99))!important;border:1px solid rgba(132,171,224,.21)!important;box-shadow:0 17px 40px rgba(0,0,0,.17),inset 0 1px 0 rgba(255,255,255,.045)!important}
+#view-tutor .tutor-panel:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#5ce8c5,#71bdff,#ac8cff,#ff9fbe);opacity:.9}
+#view-tutor .tutor-panel h2{font-size:20px!important;letter-spacing:-.5px;color:#f5f8ff!important}
+#view-tutor .tutor-muted{color:#aabbd2!important}
+#view-tutor .tutor-chips{gap:8px!important;margin:15px 0!important}
+#view-tutor .tutor-chips button{padding:8px 12px!important;border:1px solid rgba(127,169,222,.22)!important;border-radius:999px!important;background:linear-gradient(120deg,rgba(51,202,180,.1),rgba(103,130,255,.1))!important;color:#c6d8ed!important;transition:transform .18s,border-color .18s,background .18s}
+#view-tutor .tutor-chips button:hover{transform:translateY(-2px);border-color:rgba(108,231,209,.55)!important;background:rgba(48,147,143,.2)!important}
+#view-tutor .tutor-chat{height:350px!important;padding:15px!important;margin:14px 0!important;border:1px solid rgba(132,169,219,.18)!important;border-radius:17px!important;background:radial-gradient(circle at 8% 0%,rgba(54,185,171,.09),transparent 32%),linear-gradient(145deg,#091629,#101b31)!important;scroll-behavior:smooth}
+#view-tutor .tutor-bubble{padding:12px 14px!important;border-radius:15px!important;line-height:1.65;font-size:13px!important;border:1px solid rgba(135,170,216,.15)}
+#view-tutor .tutor-bot{background:linear-gradient(130deg,rgba(31,67,79,.88),rgba(30,43,72,.88))!important;color:#e1efff!important;border-color:rgba(93,218,198,.2)!important}
+#view-tutor .tutor-user{background:linear-gradient(120deg,#175b56,#244b79)!important;color:#f2fbff!important;border-color:rgba(105,216,220,.28)!important}
+#view-tutor #tutorAskForm{display:flex;gap:9px!important;padding:8px;border:1px solid rgba(131,170,222,.22);border-radius:15px;background:rgba(7,17,32,.78)}
+#view-tutor #tutorAskForm input{flex:1;min-width:0;border:0!important;background:transparent!important;box-shadow:none!important;padding:11px 9px!important;color:#f2f7ff!important}
+#view-tutor #tutorAskForm input::placeholder{color:#788eac}
+#view-tutor .tutor-primary{border:1px solid rgba(255,255,255,.24)!important;border-radius:11px!important;padding:10px 17px!important;background:linear-gradient(100deg,#5ce7c3,#71c4f4 55%,#a98bff)!important;color:#08182a!important;font-weight:850!important;box-shadow:0 8px 22px rgba(75,195,206,.16)!important}
+#view-tutor .tutor-field{gap:8px!important;margin:14px 0!important}
+#view-tutor .tutor-field label,#view-tutor label{color:#b9cbe1!important;font-weight:650}
+#view-tutor .tutor-field input,#view-tutor .tutor-field select,#view-tutor input,#view-tutor select{background:#09172b!important;color:#edf5ff!important;border:1px solid rgba(132,169,221,.25)!important;border-radius:12px!important;padding:12px!important}
+#view-tutor .tutor-field input:focus,#view-tutor .tutor-field select:focus,#view-tutor #tutorAskForm:focus-within{outline:none;border-color:#6ce5d0!important;box-shadow:0 0 0 3px rgba(104,229,208,.1)!important}
+#view-tutor #tutorCalculate{width:100%;min-height:46px;margin-top:10px}
+#view-tutor .tutor-result{min-height:75px;padding:16px!important;border-radius:15px!important;background:linear-gradient(120deg,rgba(40,143,124,.17),rgba(74,105,183,.15))!important;border:1px solid rgba(107,222,201,.22)!important;color:#d8e9f8!important;line-height:1.65}
+#view-tutor .tutor-result strong{color:#86f0d7!important}
+#view-tutor .tutor-cards{gap:13px!important;margin-top:18px!important}
+#view-tutor .tutor-card{position:relative;overflow:hidden;padding:19px!important;border-radius:18px!important;background:linear-gradient(145deg,rgba(24,43,68,.96),rgba(14,25,44,.98))!important;border:1px solid rgba(130,169,222,.19)!important;box-shadow:0 12px 28px rgba(0,0,0,.13)!important}
+#view-tutor .tutor-card span{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,rgba(81,224,195,.2),rgba(119,145,255,.18));font-size:22px}
+#view-tutor .tutor-card b{color:#f0f6ff!important;margin:10px 0 6px!important}
+#view-tutor .tutor-shell>footer{margin-top:20px;color:#8095b2!important}
+@media(max-width:760px){
+ #view-tutor .tutor-shell>header{padding:10px 12px!important}
+ #view-tutor .tutor-hero{min-height:160px!important;padding:23px 19px!important;border-radius:21px!important}
+ #view-tutor .tutor-hero:after{right:0;font-size:110px}
+ #view-tutor .tutor-grid,#view-tutor .tutor-cards{grid-template-columns:1fr!important}
+ #view-tutor .tutor-chat{height:310px!important}
+ #view-tutor .tutor-panel{padding:17px!important}
+ #view-tutor .tutor-cards{gap:10px!important}
+}
+@media(max-width:380px){#view-tutor .tutor-chips button{font-size:11px!important;padding:7px 9px!important}#view-tutor #tutorAskForm{gap:5px!important}}
+@media(prefers-reduced-motion:reduce){#view-tutor .tutor-chips button{transition:none!important}}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

@@ -1704,6 +1704,36 @@ if('serviceWorker' in navigator && location.protocol==='https:'){
 #webchemOfflineNotice{position:fixed;z-index:100000;left:50%;bottom:calc(14px + env(safe-area-inset-bottom));transform:translateX(-50%);width:min(92vw,520px);padding:10px 14px;border:1px solid #47766c;border-radius:14px;background:#102b29;color:#dffbf2;box-shadow:0 8px 30px #0008;font:13px/1.4 system-ui,sans-serif;display:none}
 #webchemOfflineNotice[data-state="offline"]{display:block}
 #webchemOfflineNotice strong{color:#75f0c2}
+
+/* WebChem authentication hero refinement: restrained scientific orbital visual. */
+#authGate .auth-layout{display:grid!important;grid-template-columns:minmax(0,1.02fr) minmax(420px,.98fr)!important;min-height:100svh!important;align-items:stretch!important;justify-content:initial!important;background:radial-gradient(ellipse at 78% 8%,#15343b 0,transparent 38%),#09131b!important}
+#authGate .auth-showcase{display:flex!important;position:relative!important;isolation:isolate;min-height:100svh!important;padding:clamp(34px,5.5vw,76px)!important;overflow:hidden!important;border-right:1px solid #203640!important;background:linear-gradient(145deg,rgba(16,43,48,.9),rgba(8,17,26,.96))!important}
+#authGate .auth-showcase:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 68% 35%,#5de7c70d,transparent 32%),linear-gradient(110deg,transparent 65%,#75f0c208)}
+#authGate .auth-show-brand{position:relative;z-index:3}
+#authGate .auth-orbit{position:absolute!important;z-index:0!important;width:clamp(230px,27vw,370px)!important;height:clamp(230px,27vw,370px)!important;right:4%!important;top:11%!important;left:auto!important;border:1px solid #75f0c23b!important;border-radius:50%!important;opacity:.72;transform:rotateX(62deg) rotateZ(-22deg);transform-style:preserve-3d;animation:webchemOrbitFloat 12s ease-in-out infinite!important;pointer-events:none}
+#authGate .auth-orbit:before{inset:8%!important;border:1px solid #75f0c24d!important;transform:rotateY(68deg) rotateZ(22deg);box-shadow:0 0 35px #75f0c20b}
+#authGate .auth-orbit:after{inset:20%!important;border:1px solid #7eb9ff42!important;transform:rotateY(-65deg) rotateZ(-38deg)}
+#authGate .auth-orbit span{position:relative;z-index:2;font-size:clamp(76px,10vw,138px)!important;color:#9cf5d8!important;text-shadow:0 0 18px #75f0c255,0 0 46px #75f0c222;transform:rotateX(-62deg) rotateZ(22deg);animation:webchemAtomPulse 5s ease-in-out infinite}
+#authGate .auth-orbit i,#authGate .auth-orbit b{width:9px!important;height:9px!important;z-index:3;box-shadow:0 0 16px currentColor!important}
+#authGate .auth-orbit i{top:13%!important;right:18%!important;background:#a6f7dc!important;color:#a6f7dc}
+#authGate .auth-orbit b{bottom:15%!important;left:13%!important;background:#8dc9ff!important;color:#8dc9ff}
+#authGate .auth-show-copy{position:relative!important;z-index:4!important;margin-top:auto!important;margin-bottom:clamp(34px,8vh,88px)!important;max-width:470px!important}
+#authGate .auth-show-copy h2{font-size:clamp(38px,4.3vw,62px)!important;line-height:1.04!important;letter-spacing:-2.2px!important;max-width:470px;margin:16px 0 18px!important}
+#authGate .auth-show-copy h2 em{color:#75f0c2!important}
+#authGate .auth-show-copy p{max-width:390px!important;font-size:14px!important;line-height:1.75!important}
+#authGate .auth-show-foot{position:relative;z-index:3;margin-top:0}
+#authGate .auth-form-side{min-height:100svh!important;padding:34px clamp(26px,5vw,76px)!important}
+#authGate .gate-card{width:min(100%,430px)!important}
+@keyframes webchemOrbitFloat{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -9px;rotate:5deg}}
+@keyframes webchemAtomPulse{0%,100%{filter:drop-shadow(0 0 8px #75f0c244)}50%{filter:drop-shadow(0 0 22px #75f0c288)}}
+@media(max-width:800px){
+ #authGate .auth-layout{display:grid!important;grid-template-columns:1fr!important}
+ #authGate .auth-showcase{display:none!important}
+ #authGate .auth-form-side{min-height:100svh!important;padding:26px 22px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #authGate .auth-orbit,#authGate .auth-orbit span{animation:none!important}
+}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>

@@ -1928,6 +1928,34 @@ body{background:radial-gradient(ellipse at 8% 0%,rgba(34,211,190,.10),transparen
  .panel,.lesson,.quizq{border-radius:17px!important}
 }
 @media(prefers-reduced-motion:reduce){.nav button,.feature,.btn{transition:none!important}}
+
+/* Learning library — premium course catalogue treatment */
+#view-learn .viewhead{padding:clamp(22px,3.5vw,34px)!important;border:1px solid rgba(122,177,225,.22)!important;border-radius:24px!important;background:radial-gradient(circle at 88% 12%,rgba(112,140,255,.22),transparent 28%),radial-gradient(circle at 72% 100%,rgba(63,223,192,.15),transparent 35%),linear-gradient(125deg,#123b46,#1b2b4a 60%,#30264d)!important;box-shadow:0 20px 50px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.08)!important}
+#view-learn .viewhead h1{font-size:clamp(30px,4vw,44px)!important;color:#fff!important}
+#view-learn .viewhead p{color:#c1d3e8!important}
+#view-learn .viewhead .eyebrow{background:linear-gradient(90deg,#76f0d1,#83c7ff,#c2a3ff);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+#view-learn .viewhead .btn{background:rgba(255,255,255,.08)!important;border-color:rgba(255,255,255,.24)!important;color:#eff8ff!important;backdrop-filter:blur(10px)}
+#view-learn #lessonFilters{display:flex;gap:9px;overflow-x:auto;padding:5px 2px 12px;scrollbar-width:thin}
+#view-learn #lessonFilters .chip{white-space:nowrap;padding:9px 14px!important;border-radius:999px!important}
+#view-learn #lessonGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:15px!important}
+#view-learn .lesson{position:relative;overflow:hidden;padding:21px!important;border-radius:20px!important;background:linear-gradient(145deg,rgba(25,42,66,.98),rgba(14,24,42,.99))!important;border:1px solid rgba(130,170,224,.2)!important;box-shadow:0 14px 34px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.045)!important;transition:transform .22s,border-color .22s,box-shadow .22s!important}
+#view-learn .lesson:before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#5de9c7,#70bfff,#aa8cff,#ff9fbd);opacity:.9}
+#view-learn .lesson:after{content:"";position:absolute;width:150px;height:150px;right:-72px;top:-82px;border-radius:50%;background:radial-gradient(circle,rgba(96,204,255,.15),transparent 68%);pointer-events:none}
+#view-learn .lesson:hover{transform:translateY(-4px)!important;border-color:rgba(105,231,211,.42)!important;box-shadow:0 22px 45px rgba(0,0,0,.23),0 0 28px rgba(83,208,195,.07)!important}
+#view-learn .lesson .meta{display:inline-flex;padding:5px 9px;border-radius:999px;background:rgba(96,224,201,.09);border:1px solid rgba(96,224,201,.19);color:#8bf0d7!important;font-size:10px!important;letter-spacing:.8px}
+#view-learn .lesson>div[style*="font-size:26px"]{width:52px;height:52px;display:grid;place-items:center;margin:14px 0 10px!important;border-radius:16px;background:linear-gradient(145deg,rgba(80,220,197,.2),rgba(116,143,255,.2));border:1px solid rgba(132,207,226,.18);font-size:25px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+#view-learn .lesson h3{font-size:18px!important;letter-spacing:-.35px;color:#f3f7ff!important;margin:8px 0 7px!important}
+#view-learn .lesson p{font-size:13px!important;line-height:1.65;color:#aebfd6!important;min-height:42px}
+#view-learn .lessonfoot{border-top:1px solid rgba(135,166,213,.14);padding-top:13px;margin-top:15px!important}
+#view-learn .lessonfoot small{font-size:11px}
+#view-learn .lessonfoot .btn{border-radius:10px!important}
+@media(max-width:650px){
+ #view-learn .viewhead{display:block!important;padding:22px 19px!important;margin-top:3px!important}
+ #view-learn .viewhead .btn{margin-top:15px}
+ #view-learn #lessonGrid{grid-template-columns:1fr!important;gap:12px!important}
+ #view-learn .lesson{padding:18px!important}
+ #view-learn .lesson p{min-height:0}
+}
 </style>
 <div id="webchemOfflineNotice" role="status" aria-live="polite" data-state="online"><strong>Offline mode</strong> · WebChem shell is available. Some account, AI and cloud features need internet.</div>
 <script>
